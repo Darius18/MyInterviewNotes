@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #ni{
+        height: 10000px;
+        width: 100px;
+        background-color: aquamarine;
+    }
+</style>
+<body>
+    <div id="ni"></div>
+</body>
+<script>
+    
+    function throttle(fn, delay){
+        let valid = true
+        return function(){
+            if(!valid){return}
+            valid = false
+            setTimeout(()=>{
+                fn()
+                valid = true
+            }, delay)
+    }
+}
+
+function debounce(fn, delay){
+    let timer = null;
+    return function(){
+        if(timer){
+            clearTimeout(timer)
+            timer = setTimeout(fn, delay)
+        }else{
+            timer = setTimeout(fn, delay)
+        }
+    }
+}
+
+
+//验证1
+function showTop  () {
+    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+　　console.log('滚动条位置：' + scrollTop);
+}
+window.onscroll = throttle(showTop,1000) 
+
+//验证2
+function say(){
+    console.log("hello")
+}
+for(let i=0;i<100;i++){
+    console.log("??")
+    debounce(say,5000)()
+}
+
+</script>
+</html>
