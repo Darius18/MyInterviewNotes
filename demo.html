@@ -18,46 +18,26 @@
 </body>
 <script>
     
-    function throttle(fn, delay){
-        let valid = true
-        return function(){
-            if(!valid){return}
-            valid = false
-            setTimeout(()=>{
-                fn()
-                valid = true
-            }, delay)
-    }
-}
-
-function debounce(fn, delay){
-    let timer = null;
-    return function(){
-        if(timer){
-            clearTimeout(timer)
-            timer = setTimeout(fn, delay)
-        }else{
-            timer = setTimeout(fn, delay)
+const getJSON = function(url){
+    const promise = new Promise(function(resolve, reject){
+        const client = new XMLHttpRequest();
+        client.open("GET", url);
+        client.onreadystatechange = function(){
+            if(this.readyState !==4){return}
+            if(this.status === 200){resolve(this.response)}
+            else{reject(new Error(this.statusText))}
         }
-    }
+        client.responseType = 'json'
+        client.setRequestHeader('Accept','application/json')
+        client.send();
+    })
+
+    return promise
 }
 
+getJSON('/posts.json').then(function(json){
 
-//验证1
-function showTop  () {
-    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-　　console.log('滚动条位置：' + scrollTop);
-}
-window.onscroll = throttle(showTop,1000) 
-
-//验证2
-function say(){
-    console.log("hello")
-}
-for(let i=0;i<100;i++){
-    console.log("??")
-    debounce(say,5000)()
-}
+},function(error){console.error();})
 
 </script>
 </html>
