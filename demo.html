@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <span class="name">nihao</span>
+    <span class="name">dxhuiwqdhue</span>
+    <span class="name">12346</span>
 </head>
 <style>
-    #ni{
+    #ni {
         height: 10000px;
         width: 100px;
         background-color: aquamarine;
     }
 </style>
+
 <body>
     <div id="ni"></div>
 </body>
 <script>
-    
-const getJSON = function(url){
-    const promise = new Promise(function(resolve, reject){
-        const client = new XMLHttpRequest();
-        client.open("GET", url);
-        client.onreadystatechange = function(){
-            if(this.readyState !==4){return}
-            if(this.status === 200){resolve(this.response)}
-            else{reject(new Error(this.statusText))}
-        }
-        client.responseType = 'json'
-        client.setRequestHeader('Accept','application/json')
-        client.send();
-    })
+    let spans = document.querySelectorAll('span.name');
+    console.log(spans);
 
-    return promise
-}
-
-getJSON('/posts.json').then(function(json){
-
-},function(error){console.error();})
+    let names2 = Array.from(spans, s => {return s.textContent})
+    console.log(names2);
 
 </script>
+
 </html>
